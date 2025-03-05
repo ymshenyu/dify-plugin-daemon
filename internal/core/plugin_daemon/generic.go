@@ -28,6 +28,7 @@ func GenericInvokePlugin[Req any, Rsp any](
 	listener.Listen(func(chunk plugin_entities.SessionMessage) {
 		switch chunk.Type {
 		case plugin_entities.SESSION_MESSAGE_TYPE_STREAM:
+			fmt.Println(string(chunk.Data))
 			chunk, err := parser.UnmarshalJsonBytes[Rsp](chunk.Data)
 			if err != nil {
 				response.WriteError(errors.New(parser.MarshalJson(map[string]string{
